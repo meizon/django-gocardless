@@ -17,15 +17,19 @@ if not settings.configured:
         ROOT_URLCONF='django_gocardless.webhook.urls',
         INSTALLED_APPS=[
             'django_gocardless.webhook',
+        ],
+        NOSE_ARGS = [
+            '--with-coverage',
+            '--cover-package=django_gocardless'
         ]
     )
 
 parent = dirname(abspath(__file__))
 sys.path.insert(0, parent)
 
-from django.test.simple import DjangoTestSuiteRunner
-test_runner = DjangoTestSuiteRunner(verbosity=1)
+from django_nose import NoseTestSuiteRunner
+test_runner = NoseTestSuiteRunner(verbosity=1)
 
-failures = test_runner.run_tests(['webhook', ])
+failures = test_runner.run_tests(['django_gocardless', ])
 if failures:
     sys.exit(failures)

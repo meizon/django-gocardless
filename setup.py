@@ -15,7 +15,8 @@ setup(
     install_requires=[
         'Django>=1.0',
         'gocardless',
-        'django_model_utils'
+        'django_model_utils',
+        'django-nose'
     ],
     description=(
         'A pluggable Django application for integrating GoCardless payments'),
