@@ -29,7 +29,7 @@ Using GoCardless Django
 
 1.  Whenever a webhook payload is processed a signal will be sent with the 
     result of the transaction. Connect the signals to actions to perform 
-    the needed operations when a successful payment is recieved.
+    the needed operations when a successful payload is received.
     
     There are two signals for subscriptions:
     - `subscription_cancelled` - Sent when a subscription is cancelled.
