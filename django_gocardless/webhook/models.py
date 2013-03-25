@@ -1,5 +1,7 @@
+import datetime
 import json
 import model_utils
+from decimal import Decimal
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -18,15 +20,19 @@ class PayloadManager(models.Manager):
         attr_name = '%ss' % resource_type
         for item in payload[attr_name]:
 
+            paid_at = datetime.datetime.strptime(
+                item.get('paid_at'), '%Y-%m-%dT%H:%M:%SZ'
+            ) if item.get('paid_at') else None
+
             # create the object
             o = self.create(
                 payload_id=item.get('id'),
                 status=item.get('status'),
                 source_type=item.get('source_type'),
                 source_id=item.get('source_id'),
-                amount=item.get('amount'),
-                amount_minus_fees=item.get('amount_minus_fees'),
-                paid_at=item.get('paid_at'),
+                amount=Decimal(item.get('amount')),
+                amount_minus_fees=Decimal(item.get('amount_minus_fees')),
+                paid_at=paid_at,
                 uri=item.get('uri'),
                 resource_type=resource_type,
                 action=action,
